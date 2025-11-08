@@ -111,6 +111,8 @@ pipeline {
                     echo "Deploying application to EKS..."
                     kubectl apply -f deployment.yml
                     kubectl apply -f service.yml
+                    kubectl apply -f ingress.yml
+                    kubectl apply -f resource.yml
 
                     echo "Verifying deployment..."
                     kubectl get pods
