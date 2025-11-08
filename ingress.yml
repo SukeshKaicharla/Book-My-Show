@@ -1,0 +1,43 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: bms-ingress
+  labels:
+    app: bms
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: a86bd8b03fc3e47738614648ec37a8d4-1207216303.ap-south-1.elb.amazonaws.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: bms-service
+            port:
+              number: 80
+
+      - path: /Movies
+        pathType: Prefix
+        backend:
+          service:
+            name: bms-api-service
+            port:
+              number: 80
+
+      - path: /Events
+        pathType: Prefix
+        backend:
+          service:
+            name: bms-admin-service
+            port:
+              number: 80
+
+  # Optional: TLS configuration
+  tls:
+  - hosts:
+    - a86bd8b03fc3e47738614648ec37a8d4-1207216303.ap-south-1.elb.amazonaws.com
+    secretName: bms-tls-secret  # You can create this using kubectl create secret tls ...
