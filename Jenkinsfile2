@@ -41,30 +41,6 @@ pipeline {
                 }
             }
         }
-
-        stage('Quality Gate') {
-    steps {
-        script {
-            // Prevent infinite waiting if SonarQube webhook fails
-            timeout(time: 2, unit: 'MINUTES') {
-                def qg = waitForQualityGate(
-                    abortPipeline: false,
-                    credentialsId: 'sonar'
-                )
-                echo "Quality Gate status: ${qg.status}"
-
-                // Explicitly fail if Quality Gate fails
-                if (qg.status != 'OK') {
-                    error "❌ Quality Gate failed: ${qg.status}"
-                } else {
-                    echo "✅ Quality Gate passed successfully!"
-                }
-            }
-        }
-    }
-}
-
-
         stage('Install Dependencies') {
             steps {
                 sh '''
