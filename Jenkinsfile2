@@ -112,7 +112,7 @@ pipeline {
                     kubectl apply -f deployment.yml
                     kubectl apply -f service.yml
                     kubectl apply -f ingress.yml
-                    kubectl apply -f https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_$PLATFORM.tar.gz
+                    kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml 
                     echo "Verifying deployment..."
                     kubectl get pods
                     kubectl get svc
